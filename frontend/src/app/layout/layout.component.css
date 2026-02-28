@@ -1,0 +1,9 @@
+.dashboard-container{
+    display: flex;
+    gap: 20px;
+}
+.layout-body{
+        position: absolute;
+        left: 250px;
+        width: 80%;
+}

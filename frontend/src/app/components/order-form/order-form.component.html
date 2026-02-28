@@ -1,0 +1,89 @@
+<div class="order-form-container">
+  <form [formGroup]="orderForm" (ngSubmit)="submitOrder()">
+    <h2>Create New Order</h2>
+
+    <div class="form-section">
+      <h3>Customer Details</h3>
+      <div class="form-group">
+        <label for="customerName">Customer Name:</label>
+        <input id="customerName" type="text" formControlName="customerName" />
+        <ng-container *ngIf="orderForm.get('customerName')?.invalid && (orderForm.get('customerName')?.dirty || orderForm.get('customerName')?.touched)">
+          <div class="validation-message">
+            Customer Name is required.
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="form-group">
+        <label for="customerEmail">Customer Email:</label>
+        <input id="customerEmail" type="email" formControlName="customerEmail" />
+        <ng-container *ngIf="orderForm.get('customerEmail')?.invalid && (orderForm.get('customerEmail')?.dirty || orderForm.get('customerEmail')?.touched)">
+          <div class="validation-message">
+            <div *ngIf="orderForm.get('customerEmail')?.hasError('required')">
+              Customer Email is required.
+            </div>
+            <div *ngIf="orderForm.get('customerEmail')?.hasError('email')">
+              Please enter a valid email address.
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Order Items</h3>
+      <div formArrayName="orderItems" class="order-items-list">
+        <ng-container *ngFor="let itemControl of orderItemsFormArray.controls; let i = index">
+          <div [formGroupName]="i" class="order-item-group">
+            <div class="form-row">
+              <div class="form-group product-select">
+                <label>Product:</label>
+                <select [formControl]="getItemControl(itemControl, 'productId')">
+                  <option [value]="null" disabled selected>Select Product</option>
+                  <option *ngFor="let product of getAvailableProductsForItem(itemControl)" [value]="product.productId">
+                    {{ product.productName }}
+                  </option>
+                </select>
+                <ng-container *ngIf="itemControlIsInvalid(itemControl, 'productId')">
+                  <div class="validation-message">
+                    <div *ngIf="itemControlHasError(itemControl, 'productId', 'required')">
+                      Product is required.
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+
+              <div class="form-group quantity-control">
+                <label>Quantity:</label>
+                <div class="quantity-buttons">
+                  <button type="button" (click)="decreaseQuantity(i)">−</button>
+                  <input type="number" [formControl]="getItemControl(itemControl, 'quantity')" />
+                  <button type="button" (click)="increaseQuantity(i)">+</button>
+                </div>
+                <ng-container *ngIf="itemControlIsInvalid(itemControl, 'quantity')">
+                  <div class="validation-message">
+                    <div *ngIf="itemControlHasError(itemControl, 'quantity', 'required')">
+                      Quantity is required.
+                    </div>
+                    <div *ngIf="itemControlHasError(itemControl, 'quantity', 'min')">
+                      Quantity must be at least 1.
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+
+              <div class="remove-item-button">
+                <button type="button" (click)="removeOrderItem(i)">Remove</button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <button type="button" (click)="addOrderItem()" class="add-item-button">Add Another Item</button>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="submit-button">Place Order</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,83 @@
+<div class="container mt-4">
+  <h2>{{ isEditMode ? 'Edit Purchase Order' : 'Create New Purchase Order' }}</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
+
+
+  <form [formGroup]="purchaseOrderForm" (ngSubmit)="onSubmit()">
+    <div *ngIf="!isEditMode">
+      <div class="mb-3">
+        <label for="supplier" class="form-label">Supplier:</label>
+        <select class="form-select" id="supplier" formControlName="supplierId">
+          <option [ngValue]="null" disabled>Select a Supplier</option>
+          <option *ngFor="let supplier of suppliers" [ngValue]="supplier.supplierId">
+            {{ supplier.name }}
+          </option>
+        </select>
+        <div *ngIf="supplierIdControl?.invalid && (supplierIdControl?.dirty || supplierIdControl?.touched)" class="text-danger">
+          Supplier is required.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="paymentType" class="form-label">Payment Type:</label>
+        <select class="form-select" id="paymentType" formControlName="paymentType">
+          <option [ngValue]="null" disabled>Select Payment Type</option>
+          <option *ngFor="let type of availablePaymentTypes" [value]="type">{{ type }}</option>
+        </select>
+        <div *ngIf="paymentTypeControl?.invalid && (paymentTypeControl?.dirty || paymentTypeControl?.touched)" class="text-danger">
+          Payment type is required.
+        </div>
+      </div>
+
+      <h4>Order Items</h4>
+      <div formArrayName="purchaseOrderItems">
+        <div *ngFor="let itemFormGroup of purchaseOrderItems.controls; let i = index" [formGroupName]="i" class="row mb-2 border p-2">
+          <div class="col-md-5">
+            <label for="productId-{{i}}" class="form-label">Product:</label>
+            <select class="form-select" id="productId-{{i}}" formControlName="productId">
+              <option [ngValue]="null" disabled selected>Select Product</option>
+              <option *ngFor="let product of products" [ngValue]="product.productId">{{ product.productName }}</option>
+            </select>
+            <div *ngIf="itemFormGroup.get('productId')?.invalid && (itemFormGroup.get('productId')?.dirty || itemFormGroup.get('productId')?.touched)" class="text-danger">
+              Product is required.
+            </div>
+          </div>
+          <div class="col-md-5">
+            <label for="quantity-{{i}}" class="form-label">Quantity:</label>
+            <input type="number" class="form-control" id="quantity-{{i}}" formControlName="quantity">
+            <div *ngIf="itemFormGroup.get('quantity')?.invalid && (itemFormGroup.get('quantity')?.dirty || itemFormGroup.get('quantity')?.touched)" class="text-danger">
+              Quantity is required and must be at least 1.
+            </div>
+          </div>
+          <div class="col-md-2 d-flex align-items-end">
+            <button type="button" class="btn btn-danger btn-sm" (click)="removeItem(i)">Remove</button>
+          </div>
+
+        </div>
+      </div>
+      <button type="button" class="btn btn-info btn-sm mt-2" (click)="addItem()">Add Item</button>
+    </div>
+
+    <div *ngIf="isEditMode">
+      <div class="mb-3">
+        <label for="orderStatus" class="form-label">Order Status:</label>
+        <select class="form-select" id="orderStatus" formControlName="orderStatus">
+          <option [ngValue]="null" disabled>Select Order Status</option>
+          <option *ngFor="let status of availableOrderStatuses" [value]="status">{{ status }}</option>
+        </select>
+        <div *ngIf="orderStatusControl?.invalid && (orderStatusControl?.dirty || orderStatusControl?.touched)" class="text-danger">
+          Order Status is required.
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3" [disabled]="purchaseOrderForm.invalid">
+      {{ isEditMode ? 'Update Purchase Order' : 'Create Purchase Order' }}
+    </button>
+    <button type="button" class="btn btn-secondary ms-2 mt-3" routerLink="/admin/purchase-orders">Cancel</button>
+  </form>
+</div>
+

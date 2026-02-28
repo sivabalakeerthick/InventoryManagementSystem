@@ -1,0 +1,72 @@
+<div class="report-container">
+  <h2>Supplier Report</h2>
+
+  <div class="report-summary-cards">
+    <div class="report-card quantity-card">
+      <div class="card-icon">
+        <i class="fas fa-boxes"></i> </div>
+      <div class="card-content">
+        <span class="card-title">Purchased Quantity</span>
+        <ng-container *ngIf="totalPurchaseQuantity !== undefined && totalPurchaseQuantity !== null && totalPurchaseQuantity > 0; else noQuantityData">
+          <span class="card-value">{{ totalPurchaseQuantity }} units</span>
+        </ng-container>
+        <ng-template #noQuantityData>
+          <span class="card-value no-data-card-value">No quantity data</span>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="report-card amount-card">
+      <div class="card-icon">
+        <i class="fas fa-money-bill-wave"></i> </div>
+      <div class="card-content">
+        <span class="card-title">Purchased Amount</span>
+        <ng-container *ngIf="totalPurchaseAmount !== undefined && totalPurchaseAmount !== null && totalPurchaseAmount > 0; else noAmountData">
+          <span class="card-value">₹{{ totalPurchaseAmount | number:'1.2-2' }}</span>
+        </ng-container>
+        <ng-template #noAmountData>
+          <span class="card-value no-data-card-value">No amount data</span>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="report-card orders-card">
+      <div class="card-icon">
+        <i class="fas fa-file-invoice"></i> </div>
+      <div class="card-content">
+        <span class="card-title">Purchase Orders</span>
+        <ng-container *ngIf="totalPurchaseOrder !== undefined && totalPurchaseOrder !== null && totalPurchaseOrder > 0; else noOrdersData">
+          <span class="card-value">{{totalPurchaseOrder}}</span>
+        </ng-container>
+        <ng-template #noOrdersData>
+          <span class="card-value no-data-card-value">No orders data</span>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="report-section">
+    <h3>Top Suppliers</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Supplier Name</th>
+          <th>Total Purchases (Units)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="topSuppliers && topSuppliers.length > 0; else noSuppliersData">
+          <tr *ngFor="let supplier of topSuppliers">
+            <td>{{ supplier.name }}</td>
+            <td>{{ supplier.totalProductsSupplied }}</td>
+          </tr>
+        </ng-container>
+        <ng-template #noSuppliersData>
+          <tr>
+            <td colspan="2" class="no-data-message">No top suppliers found for this period.</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
+</div>

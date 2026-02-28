@@ -1,0 +1,361 @@
+/* src/app/components/order-report/order-report.component.css */
+
+/*
+    IMPORTANT:
+    1. Ensure Material Icons are linked in your index.html <head>:
+       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    2. Ensure Roboto Font (Google Fonts, in index.html <head>):
+       <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+*/
+
+.report-container {
+  /* --- MODIFIED TO MATCH DASHBOARD CONTAINER --- */
+  padding: 30px; /* Same as dashboard container */
+  max-width: 1400px; /* Same as dashboard container */
+  margin: 20px auto; /* Same as dashboard container (centers horizontally, 20px vertical margin) */
+  /* --- END MODIFICATION --- */
+
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 35px; /* Keep report specific gap */
+}
+
+.report-container h2 {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e6eb;
+  letter-spacing: 0.05em;
+}
+
+.report-section h3 {
+  color: #34495e;
+  font-size: 1.8em;
+  font-weight: 600;
+  margin-bottom: 25px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.report-section h3::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: #007bff;
+  border-radius: 2px;
+}
+
+/* --- Order Summary Cards --- */
+.report-summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.report-card {
+  background-color: #fcfdff;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #eef4f9;
+}
+
+.report-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+  font-size: 2.5em; /* Material icons tend to be larger by default, adjust as needed */
+  line-height: 1;
+  width: 50px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Optional: Background circles/shapes for icons on hover */
+.report-card .card-icon::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 123, 255, 0.05); /* Light overlay */
+    border-radius: 50%;
+    z-index: 0;
+    opacity: 0.7;
+    pointer-events: none;
+    transform: scale(0);
+    transition: transform 0.3s ease-out;
+}
+.report-card:hover .card-icon::before {
+    transform: scale(1);
+}
+
+/* Specific card icon colors */
+.total-orders-card .card-icon { color: #6f42c1; /* Purple */ }
+.total-revenue-card .card-icon { color: #28a745; /* Green */ }
+.units-sold-card .card-icon { color: #fd7e14; /* Orange */ }
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.card-title {
+  font-size: 1.1em;
+  color: #6c757d;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.card-value {
+  font-size: 2em;
+  color: #343a40;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Specific value colors */
+.total-orders-card .card-value { color: #6f42c1; }
+.total-revenue-card .card-value { color: #28a745; }
+.units-sold-card .card-value { color: #fd7e14; }
+
+/* Style for 'No data' messages in cards */
+.no-data-card-value {
+  font-size: 1.4em;
+  color: #a0a0a0;
+  font-weight: 500;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* --- Top Orders Table --- */
+.report-section {
+  background-color: #fcfdff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+}
+
+.data-table { /* Applied to .ranking-table as well for base styles */
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 25px;
+  font-size: 0.95em;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.data-table thead th {
+  background-color: #e9f5ff;
+  color: #007bff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 15px 20px;
+  text-align: left;
+  border-bottom: 1px solid #d0e7ff;
+}
+
+.data-table tbody tr {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.data-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background-color: #e9f5ff;
+  transform: scale(1.01);
+}
+
+.data-table td {
+  padding: 15px 20px;
+  color: #34495e;
+}
+
+/* Specific styling for the Rank cell */
+.rank-cell {
+  background-color: #f0f8ff; /* Lightest blue for rank background */
+  font-weight: 700;
+  color: #007bff; /* Primary blue for rank number */
+  text-align: center;
+  width: 60px; /* Fixed width for rank column */
+  padding: 15px 10px; /* Adjust padding */
+  border-right: 1px solid #d0e7ff; /* Separator for rank column */
+}
+
+/* No data message for tables */
+.no-data-message {
+  text-align: center;
+  padding: 20px;
+  color: #888;
+  font-style: italic;
+  background-color: #f8f9fa;
+}
+
+.material-icons{
+  font-size: 50px;
+}
+
+/* --- Responsive Adjustments --- */
+/* Match dashboard's responsive container behavior */
+@media (max-width: 1200px) {
+  .report-container {
+    max-width: 90%; /* Same as dashboard container */
+    margin: 20px auto; /* Ensure it remains centered */
+  }
+}
+
+@media (max-width: 992px) {
+  .report-container {
+    padding: 25px; /* Adjust padding as per dashboard's general reduction */
+    gap: 25px;
+    /* Dashboard specific card/chart layout changes are not directly applicable here */
+  }
+  .report-container h2 {
+    font-size: 2.2em;
+  }
+  .report-summary-cards {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  .report-card {
+    padding: 20px;
+    gap: 15px;
+  }
+  .card-icon {
+    font-size: 2em;
+  }
+  .card-value {
+    font-size: 1.8em;
+  }
+  .report-section {
+    padding: 25px;
+  }
+  .data-table th, .data-table td {
+    padding: 12px 15px;
+    font-size: 0.9em;
+  }
+  .rank-cell {
+    width: 50px;
+    padding: 12px 8px;
+  }
+  .no-data-card-value {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 768px) {
+  .report-container {
+    padding: 20px; /* Same as dashboard container */
+    margin: 15px auto; /* Same as dashboard container */
+    box-shadow: none; /* Same as dashboard container */
+    border-radius: 0; /* Same as dashboard container */
+    gap: 20px;
+  }
+  .report-container h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  .report-section h3 {
+    font-size: 1.5em;
+  }
+  .report-summary-cards {
+    grid-template-columns: 1fr; /* Stack cards vertically on small screens */
+    gap: 15px;
+  }
+  .report-card {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 15px;
+  }
+  .card-value {
+    font-size: 1.6em;
+  }
+  .report-section {
+    padding: 20px;
+  }
+  .data-table {
+    font-size: 0.85em;
+  }
+  .data-table th, .data-table td {
+    padding: 10px 12px;
+  }
+  .rank-cell {
+    width: 45px;
+    padding: 10px 6px;
+  }
+  .no-data-card-value {
+    font-size: 1.1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .report-container {
+    padding: 15px; /* Same as dashboard container */
+    margin: 15px auto; /* Ensure it remains centered with reduced vertical margin */
+    gap: 15px;
+  }
+  .report-container h2 {
+    font-size: 1.8em;
+  }
+  .report-section h3 {
+    font-size: 1.4em;
+  }
+  .report-card {
+    padding: 12px;
+    gap: 10px;
+  }
+  .card-icon {
+    font-size: 1.8em;
+  }
+  .card-title {
+    font-size: 0.9em;
+  }
+  .card-value {
+    font-size: 1.4em;
+  }
+  .data-table th, .data-table td {
+    padding: 8px 10px;
+  }
+  .rank-cell {
+    width: 40px;
+    padding: 8px 5px;
+    font-size: 0.85em;
+  }
+  .no-data-card-value {
+    font-size: 1em;
+  }
+}

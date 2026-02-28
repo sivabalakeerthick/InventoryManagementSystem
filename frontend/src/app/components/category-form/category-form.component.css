@@ -1,0 +1,83 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Styling for the main heading (Add New Category) */
+h2 {
+    color: #0056b3;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 10px;
+}
+
+/* Styling for the form container */
+form {
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* Limit form width for better aesthetics */
+    margin: 0 auto; /* Center the form on the page */
+}
+
+/* Styling for labels */
+label {
+    display: block; /* Makes label take full width and puts input on next line */
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #555;
+    font-size: 16px;
+}
+
+/* Styling for input fields */
+input[type="text"] {
+    width: calc(100% - 22px); /* Full width minus padding and border */
+    padding: 10px 10px;
+    margin-top: 5px; /* Space between label text and input field */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none; /* Removes the default focus outline */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+}
+
+/* Styling for the submit button */
+button[type="submit"] {
+    display: block; /* Makes the button take full width if desired, or allows centering */
+    width: 100%; /* Make button full width of the form */
+    padding: 12px 20px;
+    background-color: #28a745; /* Green button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px; /* Space above the button */
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+button[type="submit"]:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+button[type="submit"]:active {
+    background-color: #1e7e34; /* Even darker green on click */
+    transform: translateY(0); /* Resets on click */
+}
+
+/* Optional: Add some spacing around the <br/> if needed, though usually not styled directly */
+br {
+    line-height: 1.5; /* Adjust as needed */
+}

@@ -1,0 +1,344 @@
+/* src/app/components/stock-overview/stock-overview.component.css */
+
+/*
+   IMPORTANT:
+   1. Ensure Material Icons are linked in your index.html <head>:
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   2. Ensure Roboto Font (Google Fonts, in index.html <head>):
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+*/
+
+/* General Layout and Typography - Applies to .stock-overview-container */
+.stock-overview-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px 30px;
+  max-width: 1200px; /* Consistent with product dashboard */
+  background-color: #f9fbfd; /* Light background */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.2em;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e6eb;
+  padding-bottom: 15px;
+}
+
+/* --- Dashboard Cards Section (adapted for Stock Overview) --- */
+.dashboard-cards { /* This class provides the grid layout for the cards */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusted for 4 cards */
+  gap: 25px; /* Space between cards */
+  margin-bottom: 30px;
+}
+
+.dashboard-card { /* General styles for each card, replacing original .card */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  align-items: flex-start; /* Align text to the left */
+  position: relative; /* For absolute positioning of the icon */
+  overflow: hidden; /* Hide anything outside card borders */
+  flex: 1 1 auto; /* Allow flex item to grow/shrink naturally in grid */
+}
+
+/* Specific Card Gradient Backgrounds and Text Colors */
+.total-products-card {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); /* Blue */
+  color: #ffffff;
+}
+
+.in-stock-card {
+  background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%); /* Green */
+  color: #ffffff;
+}
+
+.low-stock-card {
+  background: linear-gradient(135deg, #ffc107 0%, #d39e00 100%); /* Yellow/Amber */
+  color: #333; /* Dark text for contrast */
+}
+
+.out-of-stock-card {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); /* Red */
+  color: #ffffff;
+}
+
+/* Card Hover Effects */
+.dashboard-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Card Content Styling */
+.card-content { /* Renamed from .label/.value container */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  z-index: 1; /* Ensure content is above the absolute icon */
+}
+
+.card-heading { /* Renamed from .label */
+  font-size: 1.1em;
+  font-weight: 400;
+  margin-bottom: 8px;
+  opacity: 0.8;
+}
+
+.card-value { /* Renamed from .value */
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-top: 0;
+  line-height: 1.2;
+}
+
+/* Icon Styling - placed absolutely within the card */
+.card-icon {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  font-size: 3.5em;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0; /* Place it behind the text content */
+  color: rgba(255, 255, 255, 0.7); /* Default white/light color for icons on dark gradients */
+}
+
+/* Specific icon color adjustment for low-stock (yellow card is lighter) */
+.low-stock-card .card-icon {
+  color: rgba(0, 0, 0, 0.3); /* Darker icon color for contrast on the yellow gradient */
+}
+
+/* --- Controls Section (Search, Filter, Sort) - Mapped from .product-options --- */
+.controls-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end; /* Aligns items to the bottom */
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.search-filter-sort {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  flex-grow: 1;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 180px; /* Min-width for each input/select group */
+}
+
+.category-input-group {
+  /* margin-left: 20px; */ /* Keep this if you want extra space, or remove if you prefer even distribution */
+}
+
+.input-group label {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-control,
+.form-select {
+  padding: 10px 15px;
+  border: 1px solid #dcdfe4;
+  border-radius: 8px;
+  font-size: 1em;
+  color: #333;
+  transition: all 0.3s ease;/* Ensures they take full width of their input-group */
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+/* --- Stock Table --- */
+.stock-table { /* Mapped from .product-table */
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.stock-table th,
+.stock-table td {
+  padding: 15px 20px;
+  text-align: left;
+  border-bottom: 1px solid #e9ecef; /* Add border-bottom back for all rows */
+}
+
+.stock-table th {
+  background-color: #eef4f9;
+  color: #495057;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 0.05em;
+}
+
+/* No Product/Stock Message (mapped from .no-products-message) */
+.no-products-message { /* Applied directly to td for table, or app-no-records-found */
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #eef4f9;
+  border-radius: 10px;
+  color: #6c757d;
+  font-size: 1.1em;
+  margin-top: 30px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
+  /* When used inside a table td, set background and padding accordingly */
+}
+
+/* Specific status colors for the span */
+.in_stock {
+  color: #28a745; /* Green */
+  font-weight: 500;
+}
+
+.low_stock {
+  color: #ffc107; /* Amber/Yellow */
+  font-weight: 500;
+}
+
+.out_of_stock {
+  color: #dc3545; /* Red */
+  font-weight: 500;
+}
+
+/* Pagination (mapped from .pagination-controls) */
+app-pagination { /* Direct component selector */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  gap: 15px;
+}
+
+app-no-records-found { /* Direct component selector */
+  display: block;
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #eef4f9;
+  border-radius: 10px;
+  color: #6c757d;
+  font-size: 1.1em;
+  margin-top: 30px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+/* Keyframe for fade-in animation (if needed for any dynamic elements) */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Adjustments (Consistent with product dashboard) */
+@media (max-width: 768px) {
+  .stock-overview-container {
+    padding: 20px;
+    margin: 15px auto;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+
+  .dashboard-cards {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust for smaller cards */
+    gap: 15px;
+  }
+
+  .dashboard-card {
+    padding: 20px;
+  }
+  .card-icon {
+    font-size: 2.8em;
+  }
+  .card-heading {
+    font-size: 1em;
+  }
+  .card-value {
+    font-size: 2.2em;
+  }
+
+  .controls-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .search-filter-sort {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .input-group {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .category-input-group {
+    margin-left: 0;
+  }
+
+  .stock-table th,
+  .stock-table td {
+    padding: 10px 15px;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .stock-overview-container {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 1.8em;
+  }
+
+  .dashboard-cards {
+    grid-template-columns: 1fr; /* Stack cards vertically on very small screens */
+    gap: 10px;
+  }
+  .dashboard-card {
+    padding: 15px;
+  }
+  .card-icon {
+    font-size: 2.2em;
+    top: 15px;
+    right: 15px;
+  }
+  .card-heading {
+    font-size: 0.9em;
+  }
+  .card-value {
+    font-size: 1.8em;
+  }
+
+  .stock-table {
+    font-size: 0.85em;
+  }
+}

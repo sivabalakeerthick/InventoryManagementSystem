@@ -1,0 +1,385 @@
+/* src/app/components/order-dashboard/order-dashboard.component.css */
+
+/*
+   IMPORTANT:
+   1. Ensure Font Awesome is linked in your project:
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   2. Ensure Roboto Font (Google Fonts, in index.html <head>):
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+*/
+
+/* General Layout and Typography */
+.order-dashboard-container { /* Renamed from .product-dashboard-container */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px 30px;
+  max-width: 1200px;
+  background-color: #f9fbfd;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.2em;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e6eb;
+  padding-bottom: 15px;
+}
+
+/* Controls Section (Search, Filter, Create Button) */
+.controls-section { /* Matches your product dashboard's .controls-section */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end; /* Aligns items to the bottom, useful for different input heights */
+  margin-bottom: 30px;
+  gap: 20px; /* Space between flex items */
+}
+
+.search-filter-sort { /* Matches your product dashboard's .search-filter-sort */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  flex-grow: 1; /* Allows it to take available space */
+}
+
+.input-group { /* Matches your product dashboard's .input-group */
+  display: flex;
+  flex-direction: column;
+  min-width: 180px; /* Ensures inputs don't get too small */
+}
+
+/* Specific styling for category/status dropdown distance (if needed, category-input-group is generic now) */
+.category-input-group { /* Can be used for status filter if you want extra margin */
+   margin-left: 20px; 
+}
+
+.input-group label { /* Matches your product dashboard's label */
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-control, /* Matches your product dashboard's form-control */
+.form-select { /* Matches your product dashboard's form-select */
+  padding: 10px 15px;
+  border: 1px solid #dcdfe4;
+  border-radius: 8px;
+  font-size: 1em;
+  color: #333;
+  transition: all 0.3s ease;
+  width: 100%; /* Ensures they take full width of their input-group */
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  outline: none;
+}
+
+/* Buttons (General styles) */
+.btn { /* Matches your product dashboard's .btn */
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Smaller buttons for actions (View/Hide, Delete, Select for status) */
+.btn-xs { /* Matches your product dashboard's .btn-xs */
+  padding: 6px 10px; /* Reduced padding */
+  font-size: 0.85em; /* Smaller font size */
+  gap: 5px; /* Smaller gap for icons */
+}
+
+.btn-primary { /* Matches your product dashboard's .btn-primary */
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.btn-info { /* Matches your product dashboard's .btn-info */
+  background-color: #17a2b8;
+  color: #fff;
+  border: 1px solid #17a2b8;
+}
+
+.btn-info:hover {
+  background-color: #138496;
+  border-color: #138496;
+}
+
+.btn-danger { /* Matches your product dashboard's .btn-danger */
+  background-color: #dc3545;
+  color: #fff;
+  border: 1px solid #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #c82333;
+}
+
+/* --- Orders Table --- */
+.orders-table { /* Mapped from .product-table */
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 15px 20px;
+  text-align: left;
+}
+
+.orders-table th {
+  background-color: #eef4f9;
+  color: #495057;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 0.05em;
+}
+
+/* Main order rows */
+.order-row-clickable { /* Changed from product-row-clickable */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.orders-table tbody .order-row-clickable:hover {
+  background-color: #f5f8fa;
+}
+
+/* Style for the selected (expanded) row */
+.order-row-clickable.selected-row {
+  background-color: #e0f2f7; /* Lighter blue for selected state */
+  font-weight: 500;
+}
+
+/* Detail Row Styling for order items */
+.order-detail-row td { /* Changed from product-detail-row */
+  background-color: #f0f8ff; /* A distinct light background for details */
+  padding: 15px 30px; /* More padding for content */
+  border-bottom: 1px solid #e9ecef; /* Keep a border below the detail row */
+}
+
+/* Ensure the very last row (main or detail) doesn't have a bottom border */
+.orders-table tbody tr:last-of-type td {
+  border-bottom: none;
+}
+
+.detail-content-wrapper { /* Matches your product dashboard's .detail-content-wrapper */
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Space between detail items */
+  padding: 5px 0;
+  font-size: 0.95em;
+  color: #555;
+  animation: fadeIn 0.3s ease-out; /* Simple fade-in animation */
+}
+
+/* Inner table for order items */
+.order-items-table {
+  width: 100%;
+  border-collapse: collapse; /* Use collapse for inner table for cleaner borders */
+}
+
+.order-items-table th,
+.order-items-table td {
+  padding: 10px 15px; /* Slightly less padding for inner table */
+  text-align: left;
+  border-bottom: 1px solid #e9ecef; /* Border for inner table rows */
+}
+
+.order-items-table th {
+  background-color: #f8fbff; /* Lighter background for inner table header */
+  color: #5a6268;
+  font-weight: 600;
+  text-transform: capitalize; /* Capitalize for items table, not uppercase */
+  font-size: 0.85em;
+}
+
+.order-items-table tbody tr:last-child td {
+  border-bottom: none; /* No border for the last row of the inner table */
+}
+
+.price-cell { /* Matches your product dashboard's .price-cell */
+  font-weight: 500;
+  color: #28a745;
+}
+
+.action-area { /* Mapped from .action-buttons-cell */
+  text-align: center;
+  white-space: nowrap;
+  display: flex; /* Use flex for better button alignment */
+  gap: 4px; /* Space between action items */
+  flex-wrap: wrap; /* Allow wrapping if space is tight */
+  justify-content: center; /* Center items within the cell */
+}
+
+/* Styling for buttons and select inside action-area */
+.action-area .btn,
+.action-area .form-select { /* Applying common styles to both */
+    margin: 0 2px; /* Small margin between action items */
+    /* inherit btn-xs properties */
+    padding: 6px 10px;
+    font-size: 0.85em;
+    gap: 5px;
+}
+.action-area .form-select {
+    appearance: none; /* Remove default arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="#444" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    background-size: 14px;
+    padding-right: 25px; /* Make space for custom arrow */
+}
+
+
+/* No Orders Message (mapped from .no-products-message) */
+app-no-records-found {
+  display: block; /* Ensures it takes up its own space */
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #eef4f9;
+  border-radius: 10px;
+  color: #6c757d;
+  font-size: 1.1em;
+  margin-top: 30px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+/* Pagination (mapped from .pagination-controls) */
+app-pagination.pagination-controls { /* Target with component selector and class */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  gap: 15px; /* Space between pagination elements */
+}
+
+
+/* Keyframe for fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .order-dashboard-container {
+    padding: 20px;
+    margin: 15px auto;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+
+  .controls-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .search-filter-sort {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .input-group {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .category-input-group {
+    margin-left: 0;
+  }
+
+  /* Make sure inputs and selects within controls section are full width */
+  .controls-section input[type="text"],
+  .controls-section select,
+  .controls-section .btn {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .controls-section .add-product-btn { /* Specific adjustment for create button */
+      margin-top: 10px; /* Add some space above it if it's separate */
+  }
+
+
+  .orders-table th,
+  .orders-table td {
+    padding: 10px 15px;
+    font-size: 0.9em;
+  }
+
+  .action-area {
+    flex-direction: column; /* Stack action buttons vertically */
+    gap: 5px;
+  }
+
+  .action-area .btn,
+  .action-area .form-select {
+    width: 100%; /* Make action buttons/select full width in their cell */
+    padding: 6px 10px;
+    font-size: 0.8em;
+  }
+
+  .order-detail-row td {
+    padding: 10px 20px;
+  }
+
+  .detail-content-wrapper {
+    font-size: 0.9em;
+  }
+
+  .order-items-table th,
+  .order-items-table td {
+    padding: 8px 10px;
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-dashboard-container {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 1.8em;
+  }
+
+  .orders-table {
+    font-size: 0.85em;
+  }
+
+  /* Actions will already be full width from the 768px media query */
+}

@@ -1,0 +1,23 @@
+<div class="sidebar">
+    <h2>{{role}}</h2>
+    <ul class="nav-links">
+      <li *ngIf = "role === 'ADMIN'"><a routerLink="/admin/products">Product Dashboard</a></li>
+      <li *ngIf = "role === 'ADMIN'"><a routerLink="/admin/orders">Order Console</a></li>
+      <li *ngIf = "role === 'ADMIN'"><a routerLink="/admin/stock-overview">Stock Overview</a></li>
+      <li *ngIf = "role === 'ADMIN'"><a routerLink="/admin/suppliers">Supplier Management</a></li>
+      <li *ngIf = "role === 'ADMIN'"><a routerLink="/admin/purchase-orders">Purchase Orders</a></li>
+      <li *ngIf = "role === 'ADMIN'"><a routerLink="/admin/reports">Reports</a></li>
+      <li *ngIf = "role === 'ADMIN'"><a (click) = "navigateToLowStock()" routerLinkActive="active" class="nav-link warning-link">
+        <i class="fas fa-exclamation-triangle"></i> Low Stock Alerts
+        <span class="badge warning-badge">{{ lowStockCount }}</span>
+      </a></li>
+  
+      <li *ngIf = "role === 'STAFF'"><a routerLink="/staff/products">Products Dashboard</a></li>
+      <li *ngIf = "role === 'STAFF'"><a routerLink="/staff/orders">Orders Console</a></li>
+      <li *ngIf = "role === 'STAFF'"><a routerLink="/staff/stock-overview">Stock Overview</a></li>
+      
+      <li><a (click)="logout()">Logout</a></li>
+    </ul>
+</div>
+ 
+  

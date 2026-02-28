@@ -1,0 +1,33 @@
+<div class="container mt-4">
+  <h2>{{ isEditMode ? 'Edit Supplier' : 'Add New Supplier' }}</h2>
+
+  <div *ngIf="errorMessage" class="warning-banner">
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="supplierForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name:</label>
+      <input type="text" class="form-control" placeholder="e.g., Siva Bala Keerthick" id="name" formControlName="name">
+      <div *ngIf="nameControl?.invalid && (nameControl?.dirty || nameControl?.touched)" class="text-danger">
+        <span *ngIf="nameControl?.errors?.['pattern']">Name should contain only alphabets.</span>
+        <span *ngIf="nameControl?.errors?.['required']">Name is required.</span>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="contact" class="form-label">Contact:</label>
+      <input
+          type="text"
+          class="form-control"
+          id="contact"
+          formControlName="contact"
+          placeholder="e.g., 9443120221">
+      <div *ngIf="contactControl?.invalid && (contactControl?.dirty || contactControl?.touched)" class="text-danger">
+          <span *ngIf="contactControl?.errors?.['required']">Contact is required.</span>
+          <span *ngIf="contactControl?.errors?.['pattern'] || contactControl?.errors?.['minlength'] || contactControl?.errors?.['maxlength']">Contact must be a 10-digit number.</span>
+      </div>
+  </div>
+    <button type="submit" class="btn btn-success" [disabled]="supplierForm.invalid">{{ isEditMode ? 'Update Supplier' : 'Add Supplier' }}</button>
+    <button type="button" class="btn btn-secondary ms-2" routerLink="/admin/suppliers">Cancel</button>
+  </form>
+</div>

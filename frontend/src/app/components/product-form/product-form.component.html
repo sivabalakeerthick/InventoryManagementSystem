@@ -1,0 +1,62 @@
+<div class="product-form-container">
+    <h2 class="form-title">{{ isEdit ? 'Edit Product' : 'Add Product' }}</h2>
+
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+      <div class="form-group">
+        <label for="productName" class="form-label">Name:</label>
+        <input id="productName" type="text" formControlName="productName" placeholder= "Name" class="form-input" />
+        
+        <div *ngIf="productForm.get('productName')?.invalid && (productForm.get('productName')?.touched || productForm.get('productName')?.dirty)" class="error-message">
+          Product Name is required.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="description" class="form-label">Description:</label>
+        <textarea id="description" formControlName="description" placeholder= "Description" class="form-input" rows="5"></textarea>
+        
+        <div *ngIf="productForm.get('description')?.invalid && (productForm.get('description')?.touched || productForm.get('description')?.dirty)" class="error-message">
+          Description is required.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="unitPrice" class="form-label">Price:</label>
+        <input id="unitPrice" type="number" formControlName="unitPrice" placeholder= "Unit Price" class="form-input" />
+        
+        <div *ngIf="productForm.get('unitPrice')?.invalid && (productForm.get('unitPrice')?.touched || productForm.get('unitPrice')?.dirty)" class="error-message">
+          Price is required and must be a positive number.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="reOrderLevel" class="form-label">Reorder Level:</label>
+        <input id="reOrderLevel" type="number" formControlName="reOrderLevel" placeholder= "Re-Order Level" class="form-input" />
+        
+        <div *ngIf="productForm.get('reOrderLevel')?.invalid && (productForm.get('reOrderLevel')?.touched || productForm.get('reOrderLevel')?.dirty)" class="error-message">
+          Reorder Level is required and must be a non-negative number.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="category" class="form-label">Category:</label>
+        <select id="category" formControlName="categoryName" class="form-select">
+          <option value="" disabled selected hidden >-- Select a Category --</option>
+          <option *ngFor="let cat of categories" [value]="cat.categoryName">{{cat.categoryName}}</option>
+        </select>
+        <button type="button" (click)="openAddCategory()" class="add-category-button">+ Add New Category</button>
+        
+        <div *ngIf="productForm.get('categoryName')?.invalid && (productForm.get('categoryName')?.touched || productForm.get('categoryName')?.dirty)" class="error-message">
+          Category is required.
+        </div>
+      </div>
+  
+      
+      <app-category-form *ngIf="showCategoryModal" (categoryAdded)="onCategoryAdded($event)"></app-category-form>
+  
+      <br />
+      
+      <button type="submit" [disabled]="productForm.invalid" class="submit-button">Save</button>
+    </form>
+  </div>
+  

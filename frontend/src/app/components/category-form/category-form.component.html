@@ -1,0 +1,6 @@
+<h2>Add New Category</h2>
+<form (ngSubmit)="onSubmitCategory()">
+  <label>Category Name: <input [(ngModel)]="category.categoryName" name="categoryName" required /></label><br/>
+  <button type="submit">Save Category</button>
+</form>
+

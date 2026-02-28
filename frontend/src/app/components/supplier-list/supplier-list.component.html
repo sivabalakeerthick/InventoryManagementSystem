@@ -1,0 +1,56 @@
+<div class="container mt-4 supplier-list-container">
+    <h2 class="supplier-list-title">Supplier List</h2>
+
+    <div *ngIf="errorMessage" class="warning-banner">
+        {{ errorMessage }}
+    </div>
+
+    <div class="controls-section mb-4"> <button class="btn btn-primary add-product-btn" routerLink="/admin/suppliers/add">
+        <i class="fas fa-plus-circle"></i> Add New Supplier
+      </button>
+ 
+      <div class="search-filter-sort"> <div class="input-group search-bar-container"><input
+            type="text"
+            id="searchSupplier"
+            class="form-control search-input"
+            placeholder="Search by Supplier Name"
+            [(ngModel)]="searchQuery"
+            (input)="onSearchInput()">
+          <button *ngIf="searchQuery" class="btn btn-outline-secondary clear-search-btn btn-xs" type="button" (click)="clearSearch()">
+            <i class="fas fa-times"></i> Clear </button>
+        </div>
+      </div>
+      </div>
+ 
+
+    <table class="table table-striped supplier-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Contact</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let supplier of suppliers">
+                <td>{{ supplier.supplierId }}</td>
+                <td>{{ supplier.name }}</td>
+                <td>{{ supplier.contact }}</td>
+                <td class="action-area">
+                    <button class="btn btn-xs btn-info" (click)="editSupplier(supplier.supplierId)"><i class="fas fa-edit"></i>Edit</button>
+                    <button class="btn btn-xs btn-danger" (click)="deleteSupplier(supplier.supplierId)"><i class="fas fa-trash-alt"></i>Delete</button>
+                </td>
+            </tr>
+            <tr *ngIf="suppliers.length === 0 && !errorMessage">
+                <td colspan="4" class="text-center text-muted no-supplier-message">
+                    {{ searchQuery ? 'No supplier found for the given Id.' : 'No suppliers found in the system.' }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <app-pagination [totalItems]="totalElements" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage + 1"
+        [maxVisiblePages]="5" (pageChange)="onPageChange($event)">
+    </app-pagination>
+</div>

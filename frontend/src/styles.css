@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%;
+    max-width: 100%;
+ }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+app-product-list{
+    width: 100%;
+}
+
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+app-no-records-found{
+        font-style: italic;
+        color: #78909C;
+        padding: 2rem;
+        text-align: center;
+        min-width: 800px;
+        display: block;
+        /* background-color: #fcfcfc;
+        border-radius: 8px;
+        margin-top: 1.5rem;
+        border: 1px dashed #cfd8dc;
+        font-size: 1.1rem; */
+}
+
+app-product-list{
+    display: block;
+}

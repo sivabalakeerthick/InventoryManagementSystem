@@ -1,0 +1,81 @@
+<div class="report-container">
+    <h2>Order Report</h2>
+  
+    <div class="report-summary-cards">
+      <div class="report-card total-orders-card">
+        <div class="card-icon">
+          <i class="material-icons">shopping_cart</i>
+        </div>
+        <div class="card-content">
+          <span class="card-title">Total Orders</span>
+          <ng-container *ngIf="totalOrders !== undefined && totalOrders !== null && totalOrders > 0; else noTotalOrdersData">
+            <span class="card-value">{{ totalOrders }}</span>
+          </ng-container>
+          <ng-template #noTotalOrdersData>
+            <span class="card-value no-data-card-value">No order data</span>
+          </ng-template>
+        </div>
+      </div>
+  
+      <div class="report-card total-revenue-card">
+        <div class="card-icon">
+          <i class="material-icons">payments</i>
+        </div>
+        <div class="card-content">
+          <span class="card-title">Total Revenue</span>
+          <ng-container *ngIf="totalAmount !== undefined && totalAmount !== null && totalAmount > 0; else noTotalRevenueData">
+            <span class="card-value">₹{{ totalAmount | number:'1.2-2' }}</span>
+          </ng-container>
+          <ng-template #noTotalRevenueData>
+            <span class="card-value no-data-card-value">No revenue data</span>
+          </ng-template>
+        </div>
+      </div>
+  
+      <div class="report-card units-sold-card">
+        <div class="card-icon">
+          <i class="material-icons">local_mall</i>
+        </div>
+        <div class="card-content">
+          <span class="card-title">Units Sold</span>
+          <ng-container *ngIf="totalOrderQuantity !== undefined && totalOrderQuantity !== null && totalOrderQuantity > 0; else noUnitsSoldData">
+            <span class="card-value">{{ totalOrderQuantity }}</span>
+          </ng-container>
+          <ng-template #noUnitsSoldData>
+            <span class="card-value no-data-card-value">No units sold data</span>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  
+    <div class="report-section">
+      <h3>Top Orders</h3>
+      <div class="table-container">
+        <table class="data-table ranking-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Order ID</th>
+              <th>Amount</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="topOrders && topOrders.length > 0; else noTopOrdersData">
+              <tr *ngFor="let order of topOrders; let i = index">
+                <td class="rank-cell">{{ i + 1 }}</td>
+                <td>{{ order.orderId }}</td>
+                <td>₹{{ order.totalPrice | number:'1.2-2' }}</td>
+                <td>{{ order.date | date:'mediumDate' }}</td>
+              </tr>
+            </ng-container>
+            <ng-template #noTopOrdersData>
+              <tr>
+                <td colspan="4" class="no-data-message">No top orders found for this period.</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

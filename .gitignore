@@ -1,0 +1,81 @@
+############################################
+# Angular (Frontend)
+############################################
+
+# Node modules
+frontend/node_modules/
+
+# Angular build output
+frontend/dist/
+frontend/out-tsc/
+
+# Angular cache
+frontend/.angular/
+
+# Angular coverage
+frontend/coverage/
+
+# Node logs
+frontend/npm-debug.log*
+frontend/yarn-error.log*
+
+############################################
+# Spring Boot (Backend)
+############################################
+
+# Maven / Gradle build output
+backend/target/
+backend/build/
+backend/.gradle/
+
+# Logs
+backend/*.log
+backend/logs/
+
+############################################
+# IDEs (Global - root & subfolders)
+############################################
+
+# IntelliJ
+.idea/
+**/.idea/
+*.iml
+out/
+
+# Eclipse / STS
+.project
+.classpath
+.settings/
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+
+############################################
+# VS Code
+############################################
+.vscode/
+
+############################################
+# OS files
+############################################
+.DS_Store
+Thumbs.db
+
+############################################
+# Database / Dumps
+############################################
+*.sql
+*.db
+
+############################################
+# Temporary files
+############################################
+*.swp
+*.tmp

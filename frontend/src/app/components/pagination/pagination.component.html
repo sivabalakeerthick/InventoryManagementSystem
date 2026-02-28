@@ -1,0 +1,47 @@
+<div class="pagination-container">
+    <a
+      class="pagination-link arrow"
+      [class.disabled]="currentPage === 1"
+      (click)="goToPrevPage()"
+    >
+      &laquo;
+    </a>
+  
+    <ng-container *ngIf="pages[0] > 1">
+      <a
+        class="pagination-link"
+        [class.active]="currentPage === 1"
+        (click)="goToPage(1)"
+      >1</a
+      >
+      <span class="ellipsis" *ngIf="pages[0] > 2">...</span>
+    </ng-container>
+  
+    <a
+      *ngFor="let page of pages"
+      class="pagination-link"
+      [class.active]="page === currentPage"
+      (click)="goToPage(page)"
+    >
+      {{ page }}
+    </a>
+  
+    <ng-container *ngIf="pages[pages.length - 1] < totalPages">
+      <span class="ellipsis" *ngIf="pages[pages.length - 1] < totalPages - 1">...</span>
+      <a
+        class="pagination-link"
+        [class.active]="currentPage === totalPages"
+        (click)="goToPage(totalPages)"
+      >
+        {{ totalPages }}
+      </a>
+    </ng-container>
+  
+    <a
+      class="pagination-link arrow"
+      [class.disabled]="currentPage === totalPages"
+      (click)="goToNextPage()"
+    >
+      &raquo;
+    </a>
+  </div>

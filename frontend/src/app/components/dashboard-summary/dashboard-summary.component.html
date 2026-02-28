@@ -1,0 +1,57 @@
+<div class="dashboard-container">
+    <h2 class="dashboard-heading">Current Statistics</h2>
+    <div class="dashboard-cards">
+        <mat-card>
+            <div class="card-content">
+                <div class="card-heading">Inventory Value</div>
+                <div class="card-value">₹{{ inventoryValue }}</div>
+            </div>
+            <i class="material-icons card-icon">inventory_2</i>
+        </mat-card>
+
+        <mat-card>
+            <div class="card-content">
+                <div class="card-heading">Active Products</div>
+                <div class="card-value">{{ totalProducts }}</div>
+            </div>
+            <i class="material-icons card-icon">category</i>
+        </mat-card>
+
+        <mat-card>
+            <div class="card-content">
+                <div class="card-heading">Suppliers</div>
+                <div class="card-value">{{totalSupplier}}</div>
+            </div>
+            <i class="material-icons card-icon">local_shipping</i>
+        </mat-card>
+    </div>
+
+    <div class="chart-section">
+        <div class="chart-container">
+            <h4>Stock Status</h4>
+            <canvas baseChart
+                    #stockChart
+                    [data]="stockChartData"
+                    [options]="barChartOptions"
+                    chartType="bar"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h4>Order Status</h4>
+            <canvas baseChart
+                    #orderChart
+                    [data]="orderChartData"
+                    [options]="pieOptions"
+                    chartType="doughnut"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h4>Purchase Order Status</h4>
+            <canvas baseChart
+                    #purchaseChart
+                    [data]="purchaseChartData"
+                    [options]="pieOptions"
+                    chartType="doughnut"></canvas>
+        </div>
+    </div>
+</div>

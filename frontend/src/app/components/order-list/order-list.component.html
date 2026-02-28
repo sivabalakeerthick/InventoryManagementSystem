@@ -1,0 +1,132 @@
+
+<div class="order-dashboard-container">
+  <h2>Order Dashboard</h2>
+
+  <div class="controls-section">
+    <div class="search-filter-sort">
+      <div class="input-group">
+        <label for="searchOrder">Search:</label>
+        <input
+          type="text"
+          id="searchOrder"
+          [(ngModel)]="searchQuery"
+          placeholder="Search by Customer"
+          (input)="filterOrders()"
+          class="form-control"
+        />
+      </div>
+
+      <div class="input-group category-input-group">
+        <label for="statusFilter">Filter By Status:</label>
+        <select
+          id="statusFilter"
+          [(ngModel)]="selectedStatus"
+          (change)="filterOrders()"
+          class="form-select"
+        >
+          <option value="">All</option>
+          <option *ngFor="let statusValue of orderStatusValues" [value]="statusValue">
+            {{ getOrderStatusLabel(statusValue) }}
+          </option>
+        </select>
+      </div>
+
+    </div>
+
+    <button class="btn btn-primary add-product-btn" (click)="goToCreateOrder()">
+      <i class="fas fa-plus-circle"></i> Create New Order
+    </button>
+  </div>
+
+  <table class="orders-table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Customer</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Total</th>
+        <th class="text-center">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let order of orders; let i = index">
+        <tr
+          [class.selected-row]="expandedOrders.has(i)"
+          (click)="toggle(i)"
+          class="order-row-clickable"
+        >
+          <td>{{ order.orderId }}</td>
+          <td>{{ order.customerName }} ({{ order.customerEmail }})</td>
+          <td>{{ order.date | date:'mediumDate' }}</td>
+          <td>{{ order.orderStatus }}</td>
+          <td class="price-cell">₹{{ order.totalPrice | number:'1.2-2' }}</td>
+          <td class="action-area" (click)="$event.stopPropagation()">
+            <button class="btn btn-xs btn-info" (click)="toggle(i)">
+              <i class="fas fa-eye"></i> {{ expandedOrders.has(i) ? 'Hide' : 'View' }}
+            </button>
+            <select
+              [value]="order.orderStatus"
+              #status
+              (change)="updateOrder(order, status.value)"
+              class="form-select btn-xs" 
+            >
+              <option [value]="OrderStatus.Pending">PENDING</option>
+              <option [value]="OrderStatus.Shipped">SHIPPED</option>
+              <option [value]="OrderStatus.Delivered">DELIVERED</option>
+              <option [value]="OrderStatus.Cancelled">CANCELLED</option>
+            </select>
+
+            <button class="btn btn-xs btn-danger" (click)="deleteOrder(order.orderId)">
+              <i class="fas fa-trash-alt"></i> Delete
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="expandedOrders.has(i)" class="order-detail-row">
+          <td [attr.colspan]="6">
+            <div class="detail-content-wrapper">
+              <table class="order-items-table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of order.orderItems">
+                    <td>{{ item.productName }}</td>
+                    <td>{{ item.categoryName }}</td>
+                    <td>₹{{ item.unitPrice | number:'1.2-2' }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ item.price | number:'1.2-2' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+
+  <app-no-records-found
+    *ngIf="orders && orders.length === 0"
+    [totalElements]="totalOrders"
+    message="No Orders found"
+  ></app-no-records-found>
+
+  <app-pagination
+    *ngIf="orders && orders.length > 0"
+    [totalItems]="totalOrders"
+    [itemsPerPage]="pageSize"
+    [currentPage]="currentPage + 1"
+    [maxVisiblePages]="5"
+    (pageChange)="onPageChange($event)"
+    class="pagination-controls"
+  ></app-pagination>
+</div>

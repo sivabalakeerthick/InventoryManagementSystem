@@ -1,0 +1,51 @@
+
+<div class="report-generator-container">
+
+<a class="report-link"  *ngIf = "!reportGenerationSelected" (click) = "reportGenerationSelected = true" title="Generate Report">📄 Generate Report</a>
+  <a class="report-link" *ngIf = "reportGenerationSelected" (click) = "reportGenerationSelected = false" title="Generate Report">📄 Current Statistics</a>
+
+  
+  <div *ngIf = "reportGenerationSelected">
+  <div  class="date-picker-section">
+      <mat-form-field appearance="outline"> <!-- Changed to outline for modern look -->
+          <mat-label>Start Date</mat-label>
+          <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate">
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline"> <!-- Changed to outline for modern look -->
+          <mat-label>End Date</mat-label>
+          <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate">
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+  </div>
+
+  <div class="dropdown-section">
+      <select [(ngModel)]="selectedReport" class="report-type-select">
+          <option value="" selected disabled>Select Report Type</option>
+          <option *ngFor="let report of reportTypes" [value]="report">{{ report }}</option>
+      </select>
+  </div>
+
+  <!-- Renamed button text for a professional look -->
+  <button class="generate-report-btn" (click)="generateReport()">Run Report</button>
+
+</div>
+
+  <!-- Current Statistics Dashboard -->
+  <div *ngIf="!reportGenerationSelected" class="dashboard-preview-section">
+      <app-dashboard-summary
+          [inventoryValue]="inventoryValue"
+          [totalSupplier]="totalSupplier"
+          [totalProducts]="totalProducts"
+          [productStatus]="productStatus"
+          [orderStatus]="orderStatus"
+          [purchaseStatus]="purchaseStatus">
+      </app-dashboard-summary>
+  </div>
+
+  <!-- Report Render Area -->
+  <div *ngIf="reportGenerationSelected" #reportContainer class="report-display-area"></div>
+</div>

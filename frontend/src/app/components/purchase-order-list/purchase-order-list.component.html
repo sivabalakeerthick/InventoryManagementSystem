@@ -1,0 +1,113 @@
+<div class="container mt-4 purchase-order-list-container">
+  <h2>Purchase Order List</h2>
+  <div class="controls-section mb-3"> <button class="btn btn-primary add-product-btn" routerLink="/admin/purchase-orders/add">
+    <i class="fas fa-plus-circle"></i> Create New Purchase Order
+  </button>
+
+  <div *ngIf="errorMessage" class="warning-banner">
+      {{ errorMessage }}
+  </div>
+
+  <div class="search-filter-sort"> <div class="input-group"> <label for="statusFilter">Filter By Status:</label>
+    <select
+      id="statusFilter"
+      class="form-select"
+      [(ngModel)]="selectedStatusFilter"
+      (change)="applyStatusFilter()"
+    >
+      <option value="">All</option>
+      <option value="PENDING">Pending</option>
+      <option value="SHIPPED">Shipped</option>
+      <option value="DELIVERED">Delivered</option>
+      <option value="CANCELLED">Cancelled</option>
+    </select>
+  </div>
+
+  <div class="input-group search-bar-container">
+    <input
+      type="text"
+      id="searchSupplier"
+      class="form-control search-input"
+      placeholder="Search By Supplier Name"
+      [(ngModel)]="searchSupplierName"
+      (ngModelChange)="onSearchInputChange()"
+    >
+    <button
+      *ngIf="searchSupplierName"
+      class="btn btn-outline-secondary clear-search-btn btn-xs"
+      (click)="clearSearch()"
+    >
+      <i class="fas fa-times"></i> Clear
+    </button>
+  </div>
+</div>
+</div>
+  <table class="table table-striped purchase-order-table">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Supplier</th>
+              <th>Total Amount</th>
+              <th>Status</th>
+              <th>Payment Type</th>
+              <th>Purchased Date</th>
+              <th>Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <ng-container *ngFor="let order of getDisplayedPurchaseOrders()">
+              <tr>
+                  <td>{{ order.purchaseOrderId }}</td>
+                  <td>{{ order.supplierName }}</td>
+                  <td class="price-cell">{{ order.totalAmount | currency:'INR':'symbol':'1.2-2' }}</td>
+                  <td [ngClass]="{
+                          'pending': order.orderStatus === 'PENDING',
+                          'shipped': order.orderStatus === 'SHIPPED',
+                          'delivered': order.orderStatus === 'DELIVERED',
+                          'cancelled': order.orderStatus === 'CANCELLED'
+                      }">{{ order.orderStatus }}</td>
+                  <td>{{ order.paymentType }}</td>
+                  <td>{{ order.purchaseDate | date:'mediumDate' }}</td>
+                  <td class="action-area">
+                      <button class="btn btn-xs btn-info"
+                          (click)="viewPurchaseOrder(order.purchaseOrderId)"><i class="fas fa-eye"></i>View</button>
+                      <button class="btn btn-xs btn-warning"
+                          (click)="editPurchaseOrder(order.purchaseOrderId)"><i class="fas fa-edit"></i>Edit</button>
+                      <button class="btn btn-xs btn-danger"
+                          (click)="deletePurchaseOrder(order.purchaseOrderId)"><i class="fas fa-trash-alt"></i>Delete</button>
+                  </td>
+              </tr>
+              <tr *ngIf="order.purchaseOrderId && expandedOrders.has(order.purchaseOrderId)"
+                  class="order-detail-row">
+                  <td colspan="7">
+                      <div class="table-wrapper detail-content-wrapper">
+                          <table class="order-items-table">
+                              <thead>
+                                  <tr>
+                                      <th>Product</th>
+                                      <th>Quantity</th>
+                                      <th>Total Price</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let item of order.purchaseOrderItemList">
+                                      <td>{{ item.productName }}</td>
+                                      <td>{{ item.quantity }}</td>
+                                      <td class="price-cell">₹{{ item.amount }}</td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </td>
+              </tr>
+          </ng-container>
+      </tbody>
+  </table>
+
+  <div *ngIf="getDisplayedPurchaseOrders().length === 0 && !errorMessage" class="alert alert-info no-products-message">
+      No purchase orders found.
+  </div>
+  <app-pagination class="pagination-controls" [totalItems]="totalElements" [itemsPerPage]="itemsPerPage"
+      [currentPage]="currentPage + 1" [maxVisiblePages]="5" (pageChange)="onPageChange($event)">
+  </app-pagination>
+</div>

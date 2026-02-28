@@ -1,0 +1,141 @@
+
+
+<div class="stock-overview-container">
+  <h2>Stock Overview</h2>
+
+  <div class="dashboard-cards">
+    <div class="dashboard-card total-products-card">
+      <div class="card-content">
+        <div class="card-heading">Total Products</div>
+        <div class="card-value">{{ totalProducts }}</div>
+      </div>
+      <i class="material-icons card-icon">inventory_2</i>
+    </div>
+
+    <div class="dashboard-card in-stock-card">
+      <div class="card-content">
+        <div class="card-heading">In Stock</div>
+        <div class="card-value">{{ inStockCount }}</div>
+      </div>
+      <i class="material-icons card-icon">check_circle</i>
+    </div>
+
+    <div class="dashboard-card low-stock-card">
+      <div class="card-content">
+        <div class="card-heading">Low Stock</div>
+        <div class="card-value">{{ lowStockCount }}</div>
+      </div>
+      <i class="material-icons card-icon">warning</i>
+    </div>
+
+    <div class="dashboard-card out-of-stock-card">
+      <div class="card-content">
+        <div class="card-heading">Out of Stock</div>
+        <div class="card-value">{{ outOfStockCount }}</div>
+      </div>
+      <i class="material-icons card-icon">error</i>
+    </div>
+  </div>
+
+  <div class="controls-section">
+    <div class="search-filter-sort">
+      <div class="input-group">
+        <label for="searchStock">Search:</label>
+        <input
+          type="text"
+          id="searchStock"
+          [(ngModel)]="searchQuery"
+          placeholder="Search products..."
+          (input)="filterStockRecords()"
+          class="form-control"
+        />
+      </div>
+
+      <div class="input-group category-input-group">
+        <label for="categoryFilter">Category:</label>
+        <select
+          id="categoryFilter"
+          [(ngModel)]="selectedCategory"
+          (change)="filterStockRecords()"
+          class="form-select"
+        >
+          <option value="">All Categories</option>
+          <option *ngFor="let category of categories" [value]="category.categoryName">{{ category.categoryName }}</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="sortStock">Sort Quantity:</label>
+        <select
+          id="sortStock"
+          [(ngModel)]="sortOrder"
+          (change)="sortStockRecords($event)"
+          class="form-select"
+        >
+          <option value="asc">Low to High</option>
+          <option value="desc">High to Low</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="stockStatusFilter">Filter By Status:</label>
+        <select
+          id="stockStatusFilter"
+          [(ngModel)]="selectedStatus"
+          (change)="filterStockRecords()"
+          class="form-select"
+        >
+          <option value="">All</option>
+          <option *ngFor="let stockStatus of stockStatusOptions" [value]="stockStatus">
+            {{ getStockStatusLabel(stockStatus) }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <table class="stock-table">
+    <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Reorder Level</th>
+        <th>Status</th>
+        <th>Last Updated</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngIf="stocks && stocks.length > 0; else noStockData">
+        <tr *ngFor="let stock of stocks">
+          <td>{{ stock.productId }}</td>
+          <td>{{ stock.name }}</td>
+          <td>{{ stock.quantity }}</td>
+          <td>{{ stock.reOrderLevel }}</td>
+          <td>
+            <span [ngClass]="stock.status.toLowerCase()">
+              {{ getStockStatusLabel(stock.status) }}
+            </span>
+          </td>
+          <td>{{ stock.lastUpdated | date:'mediumDate' }}</td>
+        </tr>
+      </ng-container>
+      <ng-template #noStockData>
+        <tr>
+          <td colspan="6" class="no-products-message">No Stock Entries found for the current filters.</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+
+  <app-pagination
+    *ngIf="stocks && stocks.length > 0"
+    [totalItems]="totalElements"
+    [itemsPerPage]="pageSize"
+    [currentPage]="currentPage + 1"
+    [maxVisiblePages]="5"
+    (pageChange)="onPageChange($event)"
+    class="pagination-controls"
+  ></app-pagination>
+</div>

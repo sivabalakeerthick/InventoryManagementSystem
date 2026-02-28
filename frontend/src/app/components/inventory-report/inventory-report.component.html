@@ -1,0 +1,98 @@
+<div class="report-container">
+  <h2>Inventory Report</h2>
+
+  <div class="report-summary-cards">
+    <div class="report-card revenue-card">
+      <div class="card-icon">
+        <i class="fas fa-money-bill-wave"></i>
+      </div>
+      <div class="card-content">
+        <span class="card-title">Inventory Revenue</span>
+        <ng-container *ngIf="totalAmount !== undefined && totalAmount !== null && totalAmount > 0; else noRevenueData">
+          <span class="card-value">₹{{ totalAmount | number:'1.2-2' }}</span>
+        </ng-container>
+        <ng-template #noRevenueData>
+          <span class="card-value no-data-card-value">No revenue data</span>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="report-card stock-out-card">
+      <div class="card-icon">
+        <i class="fas fa-dolly-flatbed"></i> </div>
+      <div class="card-content">
+        <span class="card-title">Stock Out</span>
+        <ng-container *ngIf="totalOrderQuantity !== undefined && totalOrderQuantity !== null && totalOrderQuantity > 0; else noStockOutData">
+          <span class="card-value">{{totalOrderQuantity}} units</span>
+        </ng-container>
+        <ng-template #noStockOutData>
+          <span class="card-value no-data-card-value">No stock out data</span>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="report-card stock-in-card">
+      <div class="card-icon">
+        <i class="fas fa-warehouse"></i> </div>
+      <div class="card-content">
+        <span class="card-title">Stock In</span>
+        <ng-container *ngIf="totalPurchaseQuantity !== undefined && totalPurchaseQuantity !== null && totalPurchaseQuantity > 0; else noStockInData">
+          <span class="card-value">{{totalPurchaseQuantity}} units</span>
+        </ng-container>
+        <ng-template #noStockInData>
+          <span class="card-value no-data-card-value">No stock in data</span>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="report-section">
+    <h3>Top Selling Products</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="orderProductQuantity && orderProductQuantity.length > 0; else noSellingData">
+          <tr *ngFor="let item of orderProductQuantity">
+            <td>{{ item.productName }}</td>
+            <td>{{ item.totalQuantity }}</td>
+          </tr>
+        </ng-container>
+        <ng-template #noSellingData>
+          <tr>
+            <td colspan="2" class="no-data-message">No top selling products found for this period.</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="report-section">
+    <h3>Top Purchased Products</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="purchaseProductQuantity && purchaseProductQuantity.length > 0; else noPurchasedData">
+          <tr *ngFor="let item of purchaseProductQuantity">
+            <td>{{ item.productName }}</td>
+            <td>{{ item.totalQuantity }}</td>
+          </tr>
+        </ng-container>
+        <ng-template #noPurchasedData>
+          <tr>
+            <td colspan="2" class="no-data-message">No top purchased products found for this period.</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+.unauthorized-container {
+    text-align: center;
+    margin-top: 100px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .unauthorized-container h1 {
+    font-size: 2.5rem;
+    color: #d32f2f;
+  }
+  
+  .unauthorized-container p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .unauthorized-container a {
+    margin-top: 20px;
+    display: inline-block;
+    text-decoration: none;
+    color: #1976d2;
+  }
+  

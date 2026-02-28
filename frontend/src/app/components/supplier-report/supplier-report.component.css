@@ -1,0 +1,311 @@
+/* Ensure Font Awesome is loaded for icons! */
+/* If you installed via npm, ensure it's imported in your styles.scss or angular.json */
+/* @import '~@fortawesome/fontawesome-free/css/all.min.css'; */
+/* Ensure a modern font like Roboto is loaded (e.g., via Google Fonts in index.html) */
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap'); */
+
+.report-container {
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); /* Stronger shadow for depth */
+  max-width: 1200px; /* Increased max-width for better card display */
+  margin: 30px auto; /* Centers the container */
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 35px; /* More spacing between main sections */
+  flex-grow: 1; /* Allows this component to fill available height in main-content */
+}
+
+.report-container h2 {
+  text-align: center;
+  color: #2c3e50; /* Darker heading color */
+  font-size: 2.5em; /* Larger heading */
+  font-weight: 700; /* Bolder heading */
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e6eb; /* More prominent separator */
+  letter-spacing: 0.05em; /* A bit of letter spacing */
+}
+
+.report-section h3 { /* Applies to "Top Suppliers" heading */
+  color: #34495e;
+  font-size: 1.8em;
+  font-weight: 600;
+  margin-bottom: 25px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+/* Underline effect for H3 in report sections */
+.report-section h3::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 60px; /* Short underline */
+  height: 3px;
+  background-color: #007bff; /* Primary blue color */
+  border-radius: 2px;
+}
+
+/* --- Report Summary Cards --- */
+.report-summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid for cards */
+  gap: 30px; /* Space between cards */
+  margin-bottom: 30px;
+}
+
+.report-card {
+  background-color: #fcfdff; /* Off-white for card background */
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Soft card shadow */
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between icon and text */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden; /* Ensure content stays within bounds */
+  position: relative;
+  border: 1px solid #eef4f9; /* Subtle border for definition */
+}
+
+.report-card:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+.card-icon {
+  font-size: 2.5em; /* Larger icons */
+  color: #007bff; /* Default icon color */
+  line-height: 1; /* Align icon better */
+  width: 50px; /* Fixed width for icon container */
+  text-align: center;
+  position: relative;
+  z-index: 1; /* Ensure icon is above pseudo-element */
+}
+
+/* Optional: Background circles/shapes for icons on hover */
+.report-card .card-icon::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 123, 255, 0.05); /* Light overlay */
+    border-radius: 50%;
+    z-index: 0;
+    opacity: 0.7;
+    pointer-events: none;
+    transform: scale(0);
+    transition: transform 0.3s ease-out;
+}
+.report-card:hover .card-icon::before {
+    transform: scale(1);
+}
+
+/* Specific card icon colors */
+.quantity-card .card-icon { color: #17a2b8; /* Teal for quantity */ }
+.amount-card .card-icon { color: #28a745; /* Green for amount */ }
+.orders-card .card-icon { color: #6f42c1; /* Purple for orders */ } /* New color for distinctness */
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  position: relative; /* For z-index to be above pseudo-element */
+  z-index: 1;
+}
+
+.card-title {
+  font-size: 1.1em;
+  color: #6c757d; /* Muted title color */
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.card-value {
+  font-size: 2em; /* Large, prominent value */
+  color: #343a40; /* Darker value color */
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Specific value colors */
+.quantity-card .card-value { color: #17a2b8; }
+.amount-card .card-value { color: #28a745; }
+.orders-card .card-value { color: #6f42c1; }
+
+/* --- Style for 'No data' messages in cards --- */
+.no-data-card-value {
+  font-size: 1.4em;
+  color: #a0a0a0; /* Muted color for no data */
+  font-weight: 500;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* --- Data Table (for Top Suppliers) --- */
+.report-section { /* Container for the H3 and table */
+  background-color: #fcfdff; /* Consistent background for sections */
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Slightly less prominent shadow than cards */
+  padding: 30px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: separate; /* Use separate for border-radius on cells */
+  border-spacing: 0;
+  margin-top: 25px;
+  font-size: 0.95em;
+  border-radius: 8px; /* Slightly less rounded than container */
+  overflow: hidden; /* For inner border-radius */
+}
+
+.data-table thead th {
+  background-color: #e9f5ff; /* Light blue header */
+  color: #007bff; /* Primary blue for header text */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 15px 20px;
+  text-align: left;
+  border-bottom: 1px solid #d0e7ff;
+}
+
+.data-table tbody tr {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  border-bottom: 1px solid #f0f2f5; /* Subtle row separator */
+}
+
+.data-table tbody tr:last-child {
+  border-bottom: none; /* No border for the last row */
+}
+
+.data-table tbody tr:hover {
+  background-color: #e9f5ff; /* Light blue on hover */
+  transform: scale(1.01); /* Subtle grow effect */
+}
+
+.data-table td {
+  padding: 15px 20px;
+  color: #34495e;
+}
+
+/* --- No data message for tables --- */
+.no-data-message {
+  text-align: center;
+  padding: 20px;
+  color: #888; /* Muted color for no data */
+  font-style: italic;
+  background-color: #f8f9fa; /* Light background for the message row */
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+  .report-container {
+    padding: 25px;
+    gap: 25px;
+  }
+  .report-container h2 {
+    font-size: 2.2em;
+  }
+  .report-summary-cards {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  .report-card {
+    padding: 20px;
+    gap: 15px;
+  }
+  .card-icon {
+    font-size: 2em;
+  }
+  .card-value {
+    font-size: 1.8em;
+  }
+  .report-section {
+    padding: 25px;
+  }
+  .data-table th, .data-table td {
+    padding: 12px 15px;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 768px) {
+  .report-container {
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: none; /* Remove shadow on small screens */
+    border-radius: 0;
+    gap: 20px;
+  }
+  .report-container h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  .report-section h3 {
+    font-size: 1.5em;
+  }
+  .report-summary-cards {
+    grid-template-columns: 1fr; /* Stack cards vertically on small screens */
+    gap: 15px;
+  }
+  .report-card {
+    flex-direction: row; /* Keep content horizontal */
+    justify-content: flex-start;
+    padding: 15px;
+  }
+  .card-value {
+    font-size: 1.6em;
+  }
+  .report-section {
+    padding: 20px;
+  }
+  .data-table {
+    font-size: 0.85em;
+  }
+  .data-table th, .data-table td {
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .report-container {
+    padding: 15px;
+    gap: 15px;
+  }
+  .report-container h2 {
+    font-size: 1.8em;
+  }
+  .report-section h3 {
+    font-size: 1.4em;
+  }
+  .report-card {
+    padding: 12px;
+    gap: 10px;
+  }
+  .card-icon {
+    font-size: 1.8em;
+  }
+  .card-title {
+    font-size: 0.9em;
+  }
+  .card-value {
+    font-size: 1.4em;
+  }
+  .data-table th, .data-table td {
+    padding: 8px 10px;
+  }
+}

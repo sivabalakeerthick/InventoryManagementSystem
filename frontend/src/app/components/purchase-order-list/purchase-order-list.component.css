@@ -1,0 +1,423 @@
+.purchase-order-list-container { /* Main container style */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px 30px;
+  max-width: 1200px;
+  background-color: #f9fbfd;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+h2 { /* Consistent heading style */
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.2em;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e6eb;
+  padding-bottom: 15px;
+}
+
+/* Warning Banner for Error Messages */
+.warning-banner {
+  background-color: #fff3cd; /* Light orange-yellow for warnings */
+  color: #856404; /* Darker text for readability */
+  border: 1px solid #ffeeba;
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 1em;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.controls-section { /* Consistent controls section layout */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end; /* Aligns items to the bottom */
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.search-filter-sort { /* Wrapper for search and filter */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  flex-grow: 1; /* Allows it to take available space */
+  justify-content: flex-end; /* Aligns search/filter to the right */
+}
+
+.input-group { /* Consistent input group styling */
+  display: flex;
+  flex-direction: column;
+  min-width: 180px; /* Base min-width for inputs */
+  position: relative;
+}
+
+.input-group label { /* Consistent label styling */
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-control,
+.form-select { /* Consistent form element styling */
+  padding: 10px 15px;
+  border: 1px solid #dcdfe4;
+  border-radius: 8px;
+  font-size: 1em;
+  color: #333;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.form-control:focus,
+.form-select:focus {
+  /*border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);*/
+  outline: none;
+}
+
+/* Clear Search Button specific styling */
+.search-bar-container { /* Specific container for search with clear button */
+  flex-direction: row; /* Keep input and button inline */
+  align-items: flex-end; /* Align them */
+  min-width: 280px; /* Ensure enough space for input and button */
+}
+
+.search-input {
+    border-radius: 10px;
+    flex-grow: 1;
+}
+
+.clear-search-btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 0; /* Remove double border */
+    padding: 10px 12px; /* Adjust padding to match input height */
+    height: 42px; /* Match input height explicitly if needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.clear-search-btn .fas {
+    font-size: 0.9em; /* Adjust icon size */
+}
+
+/* Buttons (General styles) */
+.btn { /* Consistent button base styling */
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Smaller buttons for table actions */
+.btn-xs { /* Consistent smaller button styling */
+  padding: 6px 10px;
+  font-size: 0.85em;
+  gap: 5px;
+}
+
+.btn-primary { /* Consistent primary button style (Create New Purchase Order) */
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.btn-info { /* Consistent info button style (View) */
+  background-color: #17a2b8;
+  color: #fff;
+  border: 1px solid #17a2b8;
+}
+
+.btn-info:hover {
+  background-color: #138496;
+  border-color: #138496;
+}
+
+.btn-warning { /* Consistent warning button style (Edit) */
+  background-color: #ffc107;
+  color: #333; /* Dark text for contrast on yellow */
+  border: 1px solid #ffc107;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+  border-color: #e0a800;
+}
+
+.btn-danger { /* Consistent danger button style (Delete) */
+  background-color: #dc3545;
+  color: #fff;
+  border: 1px solid #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #c82333;
+}
+
+.btn-outline-secondary { /* Consistent outline secondary button style (Clear) */
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+}
+
+.btn-outline-secondary:hover:not(:disabled) {
+  background-color: #007bff;
+  color: #f7f8f9;
+  border-color: #6c757d;
+}
+
+/* Purchase Order Table */
+.purchase-order-table { /* Consistent table base styling */
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.purchase-order-table th,
+.purchase-order-table td {
+  padding: 15px 20px;
+  text-align: left;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.purchase-order-table th {
+  background-color: #eef4f9;
+  color: #495057;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 0.05em;
+}
+
+/* Main order rows */
+.order-row-clickable {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.purchase-order-table tbody .order-row-clickable:hover {
+  background-color: #f5f8fa;
+}
+
+/* Style for the selected (expanded) row */
+.order-row-clickable.selected-row {
+  background-color: #e0f2f7; /* Lighter blue for selected state */
+  font-weight: 500;
+}
+
+.price-cell { /* Consistent price cell styling */
+  font-weight: 500;
+  color: #28a745;
+}
+
+.action-area { /* Consistent action button cell styling */
+  text-align: center;
+  white-space: nowrap;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-area .btn {
+  margin: 0 2px;
+}
+
+/* Status Spans */
+.pending {
+  color: #ffc107; /* Amber/Yellow for pending */
+  font-weight: 500;
+}
+.shipped {
+  color: #17a2b8; /* Info Blue for shipped */
+  font-weight: 500;
+}
+.delivered {
+  color: #28a745; /* Green for delivered */
+  font-weight: 500;
+}
+.cancelled {
+  color: #dc3545; /* Red for cancelled */
+  font-weight: 500;
+}
+
+/* Detail Row Styling for order items */
+.order-detail-row td { /* Consistent detail row styling */
+  background-color: #f0f8ff; /* A distinct light background for details */
+  padding: 15px 30px; /* More padding for content */
+  border-bottom: 1px solid #e9ecef; /* Keep a border below the detail row */
+}
+
+/* Ensure the very last row (main or detail) doesn't have a bottom border */
+.purchase-order-table tbody tr:last-of-type td {
+  border-bottom: none;
+}
+
+.detail-content-wrapper { /* Consistent detail wrapper */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 0.95em;
+  color: #555;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Inner table for purchase order items */
+.order-items-table { /* Consistent inner table styling */
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-items-table th,
+.order-items-table td {
+  padding: 10px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.order-items-table th {
+  background-color: #f8fbff;
+  color: #5a6268;
+  font-weight: 600;
+  text-transform: capitalize;
+  font-size: 0.85em;
+}
+
+.order-items-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* No Purchase Orders Message */
+.no-products-message { /* Consistent no records message styling */
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #eef4f9;
+  border-radius: 10px;
+  color: #6c757d;
+  font-size: 1.1em;
+  margin-top: 30px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+/* Pagination */
+app-pagination { /* Consistent pagination styling */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  gap: 15px;
+}
+
+/* Keyframe for fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .purchase-order-list-container {
+    padding: 20px;
+    margin: 15px auto;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+
+  .controls-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .search-filter-sort {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .input-group {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .search-bar-container {
+      flex-direction: row;
+      width: 100%;
+  }
+  .search-input, .clear-search-btn {
+      width: auto;
+  }
+
+
+  .purchase-order-table th,
+  .purchase-order-table td {
+    padding: 10px 15px;
+    font-size: 0.9em;
+  }
+
+  .action-area {
+    flex-direction: column; /* Stack action buttons vertically */
+    gap: 5px;
+  }
+
+  .action-area .btn {
+    width: 100%; /* Make action buttons full width in their cell */
+    padding: 6px 10px;
+    font-size: 0.8em;
+  }
+
+  .order-detail-row td {
+    padding: 10px 20px;
+  }
+
+  .detail-content-wrapper {
+    font-size: 0.9em;
+  }
+
+  .order-items-table th,
+  .order-items-table td {
+    padding: 8px 10px;
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .purchase-order-list-container {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 1.8em;
+  }
+
+  .purchase-order-table {
+    font-size: 0.85em;
+  }
+}

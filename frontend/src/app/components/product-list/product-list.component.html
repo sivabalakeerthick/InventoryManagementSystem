@@ -1,0 +1,122 @@
+<div class="product-dashboard-container">
+  <h2>Product Dashboard</h2>
+
+  <div class="controls-section">
+    <div class="search-filter-sort">
+      <div class="input-group">
+        <label for="search">Search:</label>
+        <input
+          type="text"
+          id="search"
+          [(ngModel)]="searchQuery"
+          placeholder="Search Products"
+          (input)="filterProducts()"
+          class="form-control"
+        />
+      </div>
+
+      <div class="input-group category-input-group">
+        <label for="category">Category:</label>
+        <select
+          id="category"
+          [(ngModel)]="selectedCategory"
+          (change)="filterProducts()"
+          class="form-select"
+        >
+          <option value="">All Categories</option>
+          <option *ngFor="let category of categories" [value]="category.categoryName">
+            {{ category.categoryName }}
+          </option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="sort">Sort By:</label>
+        <select id="sort" (change)="sortProducts($event)" class="form-select">
+          <option value="productName">Product Name</option>
+          <option value="unitPrice">Price</option>
+        </select>
+      </div>
+    </div>
+
+    <button *ngIf = "isAdmin()" class="btn btn-primary add-product-btn" (click)="openCreateForm()">
+      <i class="fas fa-plus-circle"></i> Add New Product
+    </button>
+  </div>
+
+  <div class="product-display-section">
+    <div *ngIf="filteredProducts.length === 0" class="no-products-message">
+      <p>No products found matching your criteria. Try adjusting your filters or search query.</p>
+    </div>
+
+    <table class="product-table" *ngIf="filteredProducts.length > 0">
+      <thead>
+        <tr>
+          <th *ngIf = "!isAdmin()">Product Id</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th *ngIf = "isAdmin()" class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let product of filteredProducts">
+          <tr
+            [class.selected-row]="selectedProductForDetails?.productId === product.productId"
+            (click)="toggleDetails(product)"
+            class="product-row-clickable"
+          >
+          <td *ngIf = "!isAdmin()">{{product.productId}}</td>
+            <td>{{ product.productName }}</td>
+            <td class="price-cell">{{ product.unitPrice | currency:'INR':'symbol':'1.2-2' }}</td>
+            <td *ngIf = "isAdmin()" class="action-buttons-cell" (click)="$event.stopPropagation()">
+              <button
+                class="btn btn-xs btn-info"
+                (click)="editProduct(product)"
+                title="Edit Product"
+              >
+                <i class="fas fa-edit"></i> Edit
+              </button>
+              <button
+                class="btn btn-xs btn-danger"
+                (click)="deleteProduct(product.productId)"
+                title="Delete Product"
+              >
+                <i class="fas fa-trash-alt"></i> Delete
+              </button>
+            </td>
+          </tr>
+
+          <tr
+            *ngIf="selectedProductForDetails?.productId === product.productId"
+            class="product-detail-row"
+          >
+            <td [attr.colspan]="3">
+              <div class="detail-content-wrapper">
+
+                <div class="detail-item">
+                  <strong>Product Id:</strong>
+                  <span>#{{ product.productId }}</span>
+                </div>
+                <div class="detail-item">
+                  <strong>Description:</strong>
+                  <span>{{ product.description || 'No description available.' }}</span>
+                </div>
+                <div class="detail-item">
+                  <strong>Category:</strong>
+                  <span>{{ product.categoryName || 'Uncategorized' }}</span>
+                </div>
+                </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <app-pagination
+    [totalItems]="totalProducts"
+    [itemsPerPage]="size"
+    [currentPage]="page + 1"
+    [maxVisiblePages]="5"
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
+</div>
